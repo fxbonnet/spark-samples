@@ -1,13 +1,19 @@
 package sample
 
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{SQLContext, SQLImplicits, SparkSession}
 
-
-trait SparkJob extends App {
+/**
+  * Takes care of the boiler plate code:
+  * - opens the spark session
+  * - imports session.implicits
+  */
+trait SparkJob extends SQLImplicits with App {
   implicit val session: SparkSession = SparkSession.builder()
     .appName(getClass.getName)
     .master("local[*]")
     .getOrCreate()
+
+  protected override def _sqlContext: SQLContext = session.sqlContext
 
   override def main(args: Array[String]): Unit = {
     println("Before the job")
@@ -18,9 +24,6 @@ trait SparkJob extends App {
 
 object MySparkJob extends SparkJob {
   println("Start of the job")
-
-  import session.implicits._
-
   val df = Seq(
     ("a", "b"),
     ("c", "d"),
