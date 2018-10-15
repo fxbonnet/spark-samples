@@ -3,6 +3,9 @@ package sample
 import org.apache.spark.SparkFiles
 import org.apache.spark.sql.SparkSession
 
+/**
+  * Read a file outside the hdfs (ftp, http...)
+  */
 object ReadExternalFile extends App {
   implicit val session: SparkSession = SparkSession.builder()
     .appName(getClass.getName)
