@@ -20,7 +20,7 @@ object CreateAnIteratorFromAnything extends App {
   val source = new SomeNonStandardIterableThing
 
   // Convert our object to a standard scala Iterator
-  val iterator = Iterator.continually(Option(source.next)).takeWhile(_.isDefined).flatten
+  val iterator = Iterator.continually(source.next).span(_ != null)._1
 
   // Now we can use it in a for comprehension \o/
   for (str <- iterator) println(str)
