@@ -11,4 +11,3 @@ object SparkJobExample extends SparkJob with App {
   df.show
   println("End of the job")
 }
-
